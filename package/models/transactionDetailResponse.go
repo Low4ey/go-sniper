@@ -1,5 +1,16 @@
 package models
 
+type Instructions struct {
+	Accounts          []string `json:"accounts"`
+	Data              string   `json:"data"`
+	ProgramId         string   `json:"programId"`
+	InnerInstructions []struct {
+		Accounts  []string `json:"accounts"`
+		Data      string   `json:"data"`
+		ProgramId string   `json:"programId"`
+	} `json:"innerInstructions"`
+}
+
 type TransactionDetailResponse struct {
 	Description    string `json:"description"`
 	Type           string `json:"type"`
@@ -36,18 +47,9 @@ type TransactionDetailResponse struct {
 			Mint string `json:"mint"`
 		} `json:"tokenBalanceChanges"`
 	} `json:"accountData"`
-	TransactionError string `json:"transactionError"`
-	Instructions     []struct {
-		Accounts          []string `json:"accounts"`
-		Data              string   `json:"data"`
-		ProgramId         string   `json:"programId"`
-		InnerInstructions []struct {
-			Accounts  []string `json:"accounts"`
-			Data      string   `json:"data"`
-			ProgramId string   `json:"programId"`
-		} `json:"innerInstructions"`
-	} `json:"instructions"`
-	Events struct {
+	TransactionError string         `json:"transactionError"`
+	Instructions     []Instructions `json:"instructions"`
+	Events           struct {
 		Swap struct {
 			NativeInput *struct {
 				Account string `json:"account"`
